@@ -1,4 +1,5 @@
 
+const BACKEND_URL = "https://your-railway-app.up.railway.app";
 
 //-----------------------------MODAL ACCESS-----------------------
 const modal = document.getElementById("my_modal_1");
@@ -29,7 +30,7 @@ if (loginButton) {
       modal.showModal();
     } else {
       try {
-        const response = await axios.post("http://localhost:3000/api/login", {
+        const response = await axios.post(`${BACKEND_URL}/api/login`, {
           email: email,
           password: password,
         });
@@ -90,7 +91,7 @@ if (registerButton) {
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/register",
+          `${BACKEND_URL}/api/register`,
           {
             email: rEmail,
             password: rPassword,
@@ -138,7 +139,7 @@ if (forgotButton) {
         "Please enter a valid password (at least 8 characters, no spaces)";
     } else {
       try {
-        const response = await axios.post("http://localhost:3000/api/login", {
+        const response = await axios.post(`${BACKEND_URL}/api/login`, {
           email: forgotEmail,
           password: prePass,
         });
@@ -149,7 +150,7 @@ if (forgotButton) {
 
         try {
           const forgotResponse = await axios.post(
-            "http://localhost:3000/api/forgot_password",
+            `${BACKEND_URL}/api/forgot_password`,
             {
               userId: userId,
               newPassword: updatePassword,
@@ -257,7 +258,7 @@ if (saveBtn) {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/add_products",
+        `${BACKEND_URL}/api/add_products`,
         formData,
         {
           headers: {
@@ -285,7 +286,7 @@ if (saveBtn) {
 const totalSales = document.getElementById("total-sales");
 if (totalSales) {
   axios
-    .get("http://localhost:3000/api/total_sales")
+    .get(`${BACKEND_URL}/api/total_sales`)
     .then((response) => {
       const totalSalesValue = response.data.total_sales || 0;
       totalSales.textContent = `${totalSalesValue} tk`;
@@ -302,7 +303,7 @@ const totalOrders = document.getElementById("total-orders");
 
 if (totalOrders) {
   axios
-    .get("http://localhost:3000/api/total_orders")
+    .get(`${BACKEND_URL}/api/total_orders`)
     .then((response) => {
       const totalOrderValue = response.data.total_orders || 0;
       totalOrders.textContent = `${totalOrderValue}`;
@@ -318,7 +319,7 @@ if (totalOrders) {
 const totalCustomer = document.getElementById("total_customers");
 if (totalCustomer) {
   axios
-    .get("http://localhost:3000/api/total_customers")
+    .get(`${BACKEND_URL}/api/total_customers`)
     .then((response) => {
       const totalCustomerNumber = response.data.total_customers || 0;
       totalCustomer.textContent = `${totalCustomerNumber}`;
@@ -335,7 +336,7 @@ const recentActivityList = document.getElementById("recent-activity-list");
 
 if (recentActivityList) {
   axios
-    .get("http://localhost:3000/api/recent_activity")
+    .get(`${BACKEND_URL}/api/recent_activity`)
 
     .then((response) => {
       const recentActivityData = response.data || [];
@@ -360,7 +361,7 @@ const allProductTableBody = document.getElementById("all_products_table_body");
 
 if (allProductTableBody) {
   axios
-    .get("http://localhost:3000/api/view_all_products")
+    .get(`${BACKEND_URL}/api/view_all_products`)
     .then((response) => {
       const allProducts = response.data.all_products || [];
 
@@ -398,7 +399,7 @@ if (deleteBtn) {
     const productCode = document.getElementById("product_code").value;
 
     axios
-      .delete(`http://localhost:3000/api/delete_product/${productCode}`)
+      .delete(`${BACKEND_URL}/api/delete_product/${productCode}`)
 
       .then((response) => {
         modalMessage.textContent =
@@ -419,7 +420,7 @@ const usersInfoTableData = document.getElementById("users_info_table_body");
 
 if (usersInfoTableData) {
   axios
-    .get("http://localhost:3000/api/view_users_info")
+    .get(`${BACKEND_URL}/api/view_users_info`)
 
     .then((response) => {
       const userInfo = response.data;
@@ -465,7 +466,7 @@ if (viewAllBuyersBtn) {
     usersInfoTableData.innerHTML = "";
 
     axios
-      .get("http://localhost:3000/api/view_users_info_all")
+      .get(`${BACKEND_URL}/api/view_users_info_all`)
 
       .then((response) => {
         const userInfo = response.data;
@@ -508,7 +509,7 @@ const viewAllUser = document.getElementById("all_user_table_body");
 
 if (viewAllUser) {
   axios
-    .get("http://localhost:3000/api/view_all_users")
+    .get(`${BACKEND_URL}/api/view_all_users`)
     .then((response) => {
       const allUser = response.data.all_users || [];
       allUser.forEach((user) => {
@@ -550,7 +551,7 @@ if (viewAllUserBtn) {
     e.preventDefault();
     viewAllUser.innerHTML = "";
     axios
-      .get("http://localhost:3000/api/full_user_info")
+      .get(`${BACKEND_URL}/api/full_user_info`)
       .then((response) => {
         const allUserInfo = response.data.all_users || [];
 
@@ -602,7 +603,7 @@ const loadReports = async () => {
   reportsParent.innerHTML = ""; // Clear previous reports
 
   try {
-    const response = await axios.get('http://localhost:3000/api/get_reports');
+    const response = await axios.get(`${BACKEND_URL}/api/get_reports`);
     const allReports = response.data.report;
 
     if(allReports.length === 0){
@@ -648,7 +649,7 @@ const topProductDiv = document.getElementById("top-products-div");
 const topProductUl = document.getElementById("top-products-ul")
 
 if(topProductDiv && topProductUl){
-    axios.get(`http://localhost:3000/api/top_products`)
+    axios.get(`${BACKEND_URL}/api/top_products`)
     .then(response =>{
       const topProducts = response.data.topProduct;
        
@@ -687,7 +688,7 @@ if (cardContainer) {
   const loadProducts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/get_products"
+        `${BACKEND_URL}/api/get_products`
       );
       const productInfo = response.data;
        allProducts = response.data;
@@ -746,7 +747,7 @@ function renderProducts(products) {
         "card bg-base-100 h-[400px] shadow-sm overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl hover:-translate-y-1";
       card.innerHTML = `
            <figure class="h-[50%]">
-              <img src="http://localhost:3000/uploads/${product.image_url}" class="h-[80%]" alt="${product.product_name}" />
+              <img src="${BACKEND_URL}/uploads/${product.image_url}" class="h-[80%]" alt="${product.product_name}" />
            </figure>
            <div class="card-body">
              <h2 class="font-semibold text-[18px] hover:underline hover:text-blue-600">${product.product_name}</h2>
@@ -782,7 +783,7 @@ const lowToHigh = document.getElementById("low_high");
 if(lowToHigh){
     lowToHigh.addEventListener("click", async() => {
         
-      axios.get("http://localhost:3000/api/price_low_to_high")
+      axios.get(`${BACKEND_URL}/api/price_low_to_high`)
       .then((response) => {
         const products = response.data.products;
         renderProducts(products);
@@ -793,7 +794,7 @@ if(lowToHigh){
 const highToLow = document.getElementById("high_low");
 if(highToLow){
     highToLow.addEventListener("click", async() => {
-        axios.get("http://localhost:3000/api/price_high_to_low")
+        axios.get(`${BACKEND_URL}/api/price_high_to_low`)
         .then((response) => {
             const products = response.data.products;
             renderProducts(products);
@@ -805,7 +806,7 @@ const defaultBtn = document.getElementById("default");
 if(defaultBtn){
     defaultBtn.addEventListener("click", async() => {
         
-     await axios.get("http://localhost:3000/api/view_all_products")
+     await axios.get(`${BACKEND_URL}/api/view_all_products`)
       .then((response) => {
           const products = response.data.all_products;
           renderProducts(products);
@@ -826,7 +827,7 @@ if(categoryFilter){
         
         if(selectedCategory ==="All"){
 
-            axios.get('http://localhost:3000/api/view_all_products')
+            axios.get(`${BACKEND_URL}/api/view_all_products`)
                   .then((response) => {
                   const products = response.data.all_products;
                    renderProducts(products);
@@ -837,7 +838,7 @@ if(categoryFilter){
             
         }
         else{
-           axios.get(`http://localhost:3000/api/category_filter?category=${selectedCategory}`)
+           axios.get(`${BACKEND_URL}/api/category_filter?category=${selectedCategory}`)
           .then(response =>{
           const products = response.data.products;
           renderProducts(products);
@@ -867,7 +868,7 @@ const purchaseBtn = document.getElementById("purchase_btn");
 const loadProductDetails = async () => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/get_product?id=${productId}`
+      `${BACKEND_URL}/api/get_product?id=${productId}`
     );
     const productInfo = response.data;
 
@@ -875,7 +876,7 @@ const loadProductDetails = async () => {
 
     const imgDiv = document.createElement("div");
     imgDiv.className = "flex justify-center items-center h-1/2 pt-15";
-    imgDiv.innerHTML = `<img src="http://localhost:3000/uploads/${productInfo.image_url}" class="rounded-md h-full " alt="${productInfo.product_name}"></img>`;
+    imgDiv.innerHTML = `<img src="${BACKEND_URL}/uploads/${productInfo.image_url}" class="rounded-md h-full " alt="${productInfo.product_name}"></img>`;
 
     const bodyDiv = document.createElement("div");
     bodyDiv.className = "md:ml-10 pt-15";
@@ -921,7 +922,7 @@ const relatedItemsLoad = async () => {
     }
 
     const { data: currentProduct } = await axios.get(
-      `http://localhost:3000/api/get_product_by_id?id=${productId}`
+      `${BACKEND_URL}/api/get_product_by_id?id=${productId}`
     );
     if (!currentProduct || !currentProduct.category) {
       relatedItemsContainer.innerHTML =
@@ -930,7 +931,7 @@ const relatedItemsLoad = async () => {
     }
 
     const response = await axios.get(
-      "http://localhost:3000/api/get_related_products",
+      `${BACKEND_URL}/api/get_related_products`,
       {
         params: {
           category: currentProduct.category,
@@ -955,7 +956,7 @@ const relatedItemsLoad = async () => {
         "card bg-base-100 h-[400px] shadow-sm overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl hover:-translate-y-1";
       card.innerHTML = `
         <figure class="h-[50%]">
-          <img src="http://localhost:3000/uploads/${product.image_url}" class="h-[80%]" alt="${product.product_name}" />
+          <img src="${BACKEND_URL}/uploads/${product.image_url}" class="h-[80%]" alt="${product.product_name}" />
         </figure>
         <div class="card-body">
           <h2 class="font-semibold text-[18px] hover:underline hover:text-blue-600">${product.product_name}</h2>
@@ -1011,7 +1012,7 @@ if (paymentBtn) {
 
     if (productPrice && Number(paymentAmount) === Number(productPrice)) {
       try {
-        const response = await axios.post("http://localhost:3000/api/buyers", {
+        const response = await axios.post(`${BACKEND_URL}/api/buyers`, {
           userId: userId,
           fullName: fName,
           phone: phone,
@@ -1050,7 +1051,7 @@ const loadMessage = () => {
   const receiverId = 1;
   axios
     .get(
-      `http://localhost:3000/api/get_messages?userId=${userId}&receiverId=${receiverId}`
+      `${BACKEND_URL}/api/get_messages?userId=${userId}&receiverId=${receiverId}`
     )
     .then((response) => {
       const messages = response.data.messages;
@@ -1113,7 +1114,7 @@ if (userMessageBtn) {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/insert_messages",
+        `${BACKEND_URL}/api/insert_messages`,
         {
           senderId: Number(userId),
           receiverId: receiverId,
@@ -1143,7 +1144,7 @@ const messageDrawer = document.getElementById("message_drawer");
 
 if (messageDrawer) {
   axios
-    .get("http://localhost:3000/api/get_unread_message_from_user")
+    .get(`${BACKEND_URL}/api/get_unread_message_from_user`)
     .then((response) => {
       const messages = response.data.message;  
 
@@ -1194,7 +1195,7 @@ const openChatBox = sender_id =>{
 //LOAD MEASSAGES FOR ADMIN UI
 const loadAdminMessages = sender_id =>{
    
-  axios.get(`http://localhost:3000/api/load_messages_for_admin?sender_id=${sender_id}`)
+  axios.get(`${BACKEND_URL}/api/load_messages_for_admin?sender_id=${sender_id}`)
   .then(response => {
 
     const messages = response.data.messages;
@@ -1245,7 +1246,7 @@ adminMessageForm.addEventListener("submit",async(e) =>{
    const userId = Number(adminChatBox.querySelector("h3").textContent.split("#")[1]);
 
   try{
-    await axios.post('http://localhost:3000/api/insert_admin_message',{
+    await axios.post(`${BACKEND_URL}/api/insert_admin_message`,{
       sender_id:1,
       receiver_id:userId,
       message_text: messageText,      
@@ -1280,7 +1281,7 @@ submitReportBtn.addEventListener("click",async(e) =>{
   }
 
 
-  axios.post('http://localhost:3000/api/sent_report',{
+  axios.post(`${BACKEND_URL}/api/sent_report`,{
 
     userId:userId,
     report_title :reportTitle,
@@ -1387,7 +1388,7 @@ if(profileSavebtn){
 
     if(!name || !phone || !address || !dob || !gender) return;
 
-    axios.post(`http://localhost:3000/api/update_profile`,profileFormData,
+    axios.post(`${BACKEND_URL}/api/update_profile`,profileFormData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -1421,7 +1422,7 @@ async function loadUserProfileDiv() {
   if (!userId) return;
 
   try {
-    const response = await axios.get(`http://localhost:3000/api/get_profile_pic?user_id=${userId}`);
+    const response = await axios.get(`${BACKEND_URL}/api/get_profile_pic?user_id=${userId}`);
     const profileDetails = response.data.profiles;
 
 
@@ -1429,7 +1430,7 @@ async function loadUserProfileDiv() {
 
     const imgDiv = document.createElement("img");
     imgDiv.className = "w-12 h-12 rounded-full";
-    imgDiv.src = `http://localhost:3000/profiles/${profileDetails.profile_pic || 'default.png'}`;
+    imgDiv.src = `${BACKEND_URL}/profiles/${profileDetails.profile_pic || 'default.png'}`;
     userProfilePicDiv.insertBefore(imgDiv, profileNameIdDiv);
 
     profileNameIdDiv.innerHTML = `
@@ -1450,7 +1451,7 @@ const userTotalOrdersDiv = document.getElementById("user-total-orders-div");
 if(userTotalOrdersDiv){
   const userId = Number(localStorage.getItem("userId"));
 
- axios.get(`http://localhost:3000/api/get_user_total_orders?user_id=${userId}`)
+ axios.get(`${BACKEND_URL}/api/get_user_total_orders?user_id=${userId}`)
  .then(response => {
      const totalOrders = response.data.total_orders;
      
@@ -1472,7 +1473,7 @@ if(userTotalOrdersDiv){
 const userTotalBillText = document.getElementById("user-total-bill-text");
 if(userTotalBillText){
   const userId = Number(localStorage.getItem("userId"))
-  axios.get(`http://localhost:3000/api/get_total_bill?user_id=${userId}`)
+  axios.get(`${BACKEND_URL}/api/get_total_bill?user_id=${userId}`)
   .then(response =>{
      const totalAmount = response.data.totalBill;
      userTotalBillText.textContent = `${totalAmount} tk`;
@@ -1490,7 +1491,7 @@ const userTotalMessgeDiv = document.getElementById("user-total-message-div");
 if(userTotalMessgeDiv){
    const userId = Number(localStorage.getItem("userId"));
    
-   axios.get(`http://localhost:3000/api/get_total_message_count?user_id=${userId}`)
+   axios.get(`${BACKEND_URL}/api/get_total_message_count?user_id=${userId}`)
    .then(response =>{
       const totalMessage = response.data.totalMessage;
 
@@ -1524,7 +1525,7 @@ const userProductTableBody = document.getElementById("user_products_table_body")
 if(userProductTableBody){
   const userId = Number(localStorage.getItem("userId"));
   
-  axios.get(`http://localhost:3000/api/user_all_purchase_products?user_id=${userId}`)
+  axios.get(`${BACKEND_URL}/api/user_all_purchase_products?user_id=${userId}`)
   .then(response =>{
 
      const products = response.data.product || [];
@@ -1565,10 +1566,10 @@ if(userProductTableBody){
 const userProfileLogo = document.getElementById("user-profile-logo");
 if(userProfileLogo){
   const userId = Number(localStorage.getItem("userId"));
-  axios.get(`http://localhost:3000/api/get_profile_pic?user_id=${userId}`)
+  axios.get(`${BACKEND_URL}/api/get_profile_pic?user_id=${userId}`)
   .then(response =>{
     const profilePic = response.data.profiles;
-    userProfileLogo.src=`http://localhost:3000/profiles/${profilePic.profile_pic}`;
+    userProfileLogo.src=`${BACKEND_URL}/profiles/${profilePic.profile_pic}`;
 
   })
   .catch(err =>{
