@@ -1,4 +1,5 @@
 // -------------------DATABASE CONNECTION PROCESS---------
+require('dotenv').config();
 const pool = require("./dataBase.js");
 
 const { response } = require("express");
@@ -28,11 +29,13 @@ const fs = require("fs");
 app.use(express.json());
 
 
+
 //-------------------------MY PORT------------------------
 const port = 3000;
 
 
 // ---------------- STATIC FOLDERS ----------------
+app.use(express.static(path.join(__dirname, "../")));
 app.use("/js", express.static(path.join(__dirname, "../js")));
 app.use("/images", express.static(path.join(__dirname, "../images")));
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
@@ -908,7 +911,8 @@ app.get(`/api/user_all_purchase_products`,async(req,res) =>{
 //USER DASHBOARD API ENDS HERE-------------------------------------------------------------------------------------
 
 
-//SERVER START
-app.listen(port,() =>{
-    console.log(`server is running on  http://localhost:${port}`); 
-})
+const myPort = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Server is running on port http://localhost:${myPort}`);
+});
