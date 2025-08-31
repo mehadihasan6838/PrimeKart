@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../output.css" />
+
+    <!-- foFONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- DAISY UI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script src="../js/index.js" defer></script>
+
+    <!-- AXIOS CDN -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js" integrity="sha512-h9644v03pHqrIHThkvXhB2PJ8zf5E9IyVnrSfZg8Yj8k4RsO4zldcQc4Bi9iVLUCCsqNY0b4WXVV4UB+wbWENA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+     
+    <title>PrimeKart</title>
+
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<!-- Header -->
+<header class="bg-white shadow-md py-4 px-6 flex justify-between items-center sticky top-0 z-20">
+    <div class="flex items-center space-x-3">
+        <!-- Mobile Menu Button -->
+        <button id="menu-btn" class="md:hidden text-gray-600 hover:text-gray-800">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <h1 class="text-2xl font-semibold text-gray-800">Welcome!</h1>
+    </div>
+    <!-- Mobile Logout Button -->
+    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 md:hidden" id="user_dashboard_mobile_logout_btn">Logout</button>
+</header>
+
+<div class="flex p-0">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed md:relative z-30 w-64 m-2 h-auto bg-white shadow-md rounded-md transform -translate-x-full md:translate-x-0 transition-transform duration-300 flex flex-col justify-between">
+        <div>
+            <!-- Profile -->
+            <div class="flex items-center space-x-3 p-4 border-b border-gray-200" id="user_profile_pic_div">                    
+                  <div id="profile-name-id_div">                      
+                 </div> 
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex flex-col space-y-2 p-4">
+                <button id="update_profile_btn" class="text-gray-700  px-3 py-2  hover:bg-blue-100 rounded transition duration-200 text-left">Update Profile</button>
+                <a href="/pages/forgot.html" class="text-gray-700 hover:bg-blue-100 px-3 py-2 rounded transition duration-200">Change password</a>
+                <a href="/about_company/help_and_support.html" class="text-gray-700 hover:bg-blue-100 px-3 py-2 rounded transition duration-200">Help & Support</a>
+            </nav>
+        </div>
+
+        <!-- Logout Button Desktop -->
+        <div class="p-4">
+            <button class="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200" id="user_dashboard_lg_logout_btn">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Overlay for mobile -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-30 hidden z-20 md:hidden"></div>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-0 md:m-4 p-0 space-y-6">
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-xl transition duration-300" id="user-total-orders-div">
+                <h2 class="text-gray-500 text-sm">Total Orders</h2>
+            </div>
+            <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-xl transition duration-300">
+                <h2 class="text-gray-500 text-sm">Total Bill</h2>
+                <p id="user-total-bill-text" class="text-2xl font-bold text-gray-800 mt-2"></p>
+            </div>
+            <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-xl transition duration-300" id="user-total-message-div">
+                <h2 class="text-gray-500 text-sm">Messages</h2>
+            </div>
+        </div>
+
+<!-- Profile Section -->
+<section class="bg-white shadow-lg rounded-xl max-w-3xl mx-auto p-6 my-8 hidden" id="update_profile_form">
+  <h2 class="text-2xl font-bold text-indigo-700 mb-6 text-center">Update Your Profile</h2>
+
+  <form  enctype="multipart/form-data" class="space-y-4">
+
+    <!-- Name -->
+    <div>
+      <label for="full_name" class="block text-gray-700 font-semibold mb-1">Full Name</label>
+      <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" required
+             class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+    </div>
+
+
+    <!-- Phone -->
+    <div>
+      <label for="phone" class="block text-gray-700 font-semibold mb-1">Phone Number</label>
+      <input type="text" id="phone" name="phone" placeholder="Enter your phone number" required
+             class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+    </div>
+
+    <!-- Address -->
+    <div>
+      <label for="address" class="block text-gray-700 font-semibold mb-1">Address</label>
+      <textarea id="address" name="address" rows="3" placeholder="Enter your address" required
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"></textarea>
+    </div>
+
+    <!-- DOB -->
+    <div>
+      <label for="dob" class="block text-gray-700 font-semibold mb-1">Date of Birth</label>
+      <input type="date" id="dob" name="dob"
+             class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" required>
+    </div>
+
+    <!-- Gender -->
+    <div>
+      <label for="gender" class="block text-gray-700 font-semibold mb-1">Gender</label>
+      <select id="gender" name="gender"
+         required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+        <option value="">Select</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <!-- Profile Picture -->
+    <div>
+      <label for="profile_pic" class="block text-gray-700 font-semibold mb-1">Profile Picture</label>
+      <input type="file" id="profile_pic" name="profile_pic" accept="image/*"
+             class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" id="profile_save_btn"
+            class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition font-semibold">
+      Update Profile
+    </button>
+
+  </form>
+</section>
+<!-- PROFILE SECTION ENDS HERE -->
+
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <a href="/pages/user.html" class="bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition duration-200 text-center">Create Order</a>
+            <button id="view-user-table-btn" class="bg-yellow-500 text-white py-3 rounded-lg hover:bg-yellow-600 transition duration-200">View orders</button>
+            <a href="/pages/messages.html" class="bg-purple-500 text-white py-3 rounded-lg hover:bg-purple-600 transition duration-200 text-center">Contact Support</a>
+        </div>
+
+    </main>
+
+</div>
+
+  <!-- VIEW TOTAL ORDERS SECTION SATRT HERE -->
+    <div class="p-5 items-center hidden" id="user-purchase-product-div">
+        <h2 class="text-center text-xl font-bold p-1 bg-blue-500 text-white">Purchase History</h2>
+          <table class="w-full  divide-y divide-gray-200" id="user-purchase-product-table">
+              <thead class="bg-gray-50">
+                  <tr>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          order_id</th>                    
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Product name</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          price</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          category</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          purchase date</th>
+                  </tr>
+                </thead>
+              <tbody class="bg-white divide-y divide-gray-200" id="user_products_table_body">
+
+              </tbody>
+          </table>
+      </div>
+       <!-- VIEW ORDER SECTION ENDS HERE -->
+
+
+<!-- WELCOME DIV -->
+<div class="flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 h-full  text-center p-6  rounded-2xl shadow-inner">
+  <!-- Welcome Text -->
+  <h2 class="text-2xl font-bold text-gray-800">
+    👋 Happy to Have You Back!
+  </h2>
+  <p class="text-gray-500 mt-2">
+    Manage your dashboard, check updates, and stay productive!
+  </p>
+
+  <!-- Illustration -->
+  <img 
+    src="/images/dashboard_illustration.png" 
+    alt="Dashboard Illustration"
+    class="max-w-xs mt-6 opacity-90"
+  />
+
+  </div>
+
+
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    });
+
+    overlay.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+    });
+</script>
+
+
+<!-- LOGOUT MODAL START FROM HERE -->
+<dialog id="logout_modal" class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Hello!</h3>
+    <p class="py-4">Are you really want to logout?</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+        <button class="btn" id="logout_btn">ok</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+
+    <!-- my modal -->
+    <dialog id="my_modal_1" class="modal">
+        <div class="modal-box">
+            <h3 class="text-lg font-bold">Hello!</h3>
+            <p id="modal-message" class="py-4"></p>
+            <div class="modal-action">
+
+                <form method="dialog">
+                    <button class="btn" id="modal-button">Close</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
+    <!-- my modal ends -->
+
+
+</body>
+</html>

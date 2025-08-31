@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../output.css" />
+
+    <!-- foFONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- DAISY UI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+
+    <!-- AXIOS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"
+        integrity="sha512-h9644v03pHqrIHThkvXhB2PJ8zf5E9IyVnrSfZg8Yj8k4RsO4zldcQc4Bi9iVLUCCsqNY0b4WXVV4UB+wbWENA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script src="/js/index.js" defer></script>
+
+    <title>PrimeKart - Messages</title>
+</head>
+
+<body class="p-1 bg-[url('/images/chat_page_bg.png')]  bg-cover bg-center w-full">
+
+      <div class="w-full bg-gray-400 h-20 flex justify-center items-center rounded-md text-white ">
+            <p class="text-3xl font-semibold">Chat Box</p>
+        </div>
+
+    <div class="bg-[url('/images/chat_bg.png')]  bg-cover bg-center  w-full mt-5 max-w-2xl mx-auto bg-gray-50 shadow-xl rounded-2xl px-6 pt-4 pb-4 flex flex-col space-y-4 min-h-[70vh] overflow-y-auto border border-gray-200"
+        id="chat_box_div">
+
+
+           <!-- USER MESSAGE LEFT -->
+
+        <!--USER MESSAGE RIGHT  -->
+    </div>
+
+    
+    <form class="flex gap-3 mt-4 bg-white p-4 rounded-2xl shadow-inner border border-gray-200 ">
+        <textarea
+            class="flex-1 border border-gray-300 rounded-2xl px-4 py-3 resize-none focus:ring-2 focus:ring-blue-400 focus:outline-none placeholder-gray-400"
+          id="user_message"  placeholder="write a message..."></textarea>
+        <button type="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl font-medium shadow transition-transform transform hover:scale-105" id="user_message_btn">Send</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../output.css" />
+
+    <!-- foFONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- DAISY UI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script src="/js/index.js" defer></script>
+
+     <!-- AXIOS CDN -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js" integrity="sha512-h9644v03pHqrIHThkvXhB2PJ8zf5E9IyVnrSfZg8Yj8k4RsO4zldcQc4Bi9iVLUCCsqNY0b4WXVV4UB+wbWENA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+     
+
+    <title>PrimeKart</title>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col p-5 lg:p-0">
+
+     <!-- NAV BAR START FROM HERE -->
+            <nav class="flex items-center justify-between p-2 h-[80px] bg-white lg:justify-between ">
+
+<!---- LOGO --------------->
+        <div class="w-27 h-15 py-2 mt-[5px] flex items-center justify-center ">
+            <img src="/images/primekart_logo.jpg" alt="primekart_logo"
+                class=" rounded-md h-[36px] w-auto hover:scale-105 hover:shadow-lg transform transition duration-300">
+        </div>
+
+<div class="flex items-center justify-between"> 
+
+    <!---- NAVIGATION LINKS --------------->
+  <div class="hidden md:flex space-x-6 font-semibold mr-9">
+    <a href="/pages/user.html" class="text-gray-700 btn px-10 hover:text-blue-600 transition hover:underline">Home</a>
+    <a href="/about_company/about_us.html" class="text-gray-700 px-10 btn hover:text-blue-600 transition hover:underline">About</a>
+    <a href="/pages/messages.html" class="text-gray-700 hover:text-blue-600 btn px-10 transition hover:underline">Contact</a>
+  </div>
+  <!-- NAVIGATION LINKS ENDS HERE -->
+
+
+      <!-- PROFILE WITH DROPDOWN MENU -->
+        <div class="dropdown dropdown-end lg:mr-9 hidden sm:flex">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                <div class="w-10 rounded-full">
+                    <img class="rounded-full" alt="Tailwind CSS Navbar component" id="user-profile-logo"
+                         />
+                </div>
+            </div>
+            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                <li><a href="/pages/user_dashboard.html">profile</a></li>
+                <li><a href="/pages/reports.html">Sent Reports</a></li>
+                <li><button id="logout">Logout</button></li>
+            </ul>
+        </div>
+<!-- DROPDOWN MENU ENDS HERE -->
+</div>
+
+
+
+
+<!-- HAMBURGER MENU BUTTON (ONLY MOBILE) -->
+        <div class="md:hidden ml-1 mt-2 mr-2">
+            <button id="hamburger-btn" class="text-gray-700 hover:text-gray-900 focus:outline-none">
+                <svg class="h-7 w-7 hover:text-blue-600 hover:scale-101" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+ <!-- MOBILE MENU -->
+        <div id="hamburger-menu" class="md:hidden hidden absolute top-[80px] right-0 w-36 bg-white shadow-md z-10 p-5">
+            <a href="/pages/index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Home</a>
+            <a href="/about_company/about_us.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">About</a>
+            <a href="/pages/messages.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Contact</a>
+            <a href="/pages/user_dashboard.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+        </div>
+
+    </nav>
+ <!-----NAV BAR ENDS HERE-------------------->
+
+<!-- PRODUCT DETAILS CONTAINER START HERE -->
+  
+   <div id="product_details_container" class="grid grid-cols-1 p-5 w-full lg:w-1/2 min-h-[400px] md:grid-cols-2 lg:grid-cols-2 gap-2 max-w-6xl mx-auto bg-white shadow-lg rounded-lg mt-5">
+
+   </div>  
+ <!-- PRODUCT DETAILS CINTAINER ENDS HERE -->
+
+ <p class="text-2xl font-semibold px-5 pt-3">Related items</p>
+
+
+
+
+ <!-- RELATED ITEMS START HERE -->
+<div id="related-items-card-container" class="grid grid-cols-1 gap-5 pt-5 pb-10 px-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        
+    </div>
+ <!-- RELATED ITEMS END HERE -->
+
+
+
+ <!-- FOOTER SECTION START -->
+
+    <div class="footer sm:footer-horizontal bg-[#232F3E] text-gray-100 p-10">
+        <aside>
+            <div class="inline-block fill-current w-30 h-20">
+                <img src="/images/primekart_logo.jpg" alt="primekartlogo"
+                    class="rounded-md hover:scale-105 transform transition duration-300">
+            </div>
+            <p>
+                PrimeKart Ltd.
+                <br />
+                Providing reliable tech since 2025
+            </p>
+        </aside>
+        <nav>
+            <h6 class="footer-title">Services</h6>
+            <a href="/about_company/branding.html" class="link link-hover">Branding</a>
+            <a href="/about_company/design.html" class="link link-hover">Design</a>
+            <a href="/about_company/marketing.html" class="link link-hover">Marketing</a>
+            <a href="/about_company/advertisement.html" class="link link-hover">Advertisement</a>
+        </nav>
+        <nav>
+            <h6 class="footer-title">Company</h6>
+            <a href="/about_company/about_us.html" class="link link-hover">About us</a>
+            <a href="/pages/messages.html" class="link link-hover">Contact</a>
+            <a href="/about_company/job.html" class="link link-hover">Jobs</a>
+            <a href="/about_company/press_kit.html" class="link link-hover">Press kit</a>
+        </nav>
+        <nav>
+            <h6 class="footer-title">Legal</h6>
+            <a href="/about_company/terms_of_use.html" class="link link-hover">Terms of use</a>
+            <a href="/about_company/privacy.html" class="link link-hover">Privacy policy</a>
+            <a href="/about_company/cookie.html" class="link link-hover">Cookie policy</a>
+        </nav>
+    </div>
+    
+    
+    <footer class="footer sm:footer-horizontal bg-neutral text-neutral-content items-center p-4 ">
+        <aside class="grid-flow-col items-center">
+    
+            <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
+        </aside>
+        <nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end text-2xl">
+            <a href="https://www.facebook.com/share/19eUo2SXtY/" class="transform transition duration-300 hover:scale-110 hover:text-blue-500">
+               <i class="fab fa-facebook-f"></i> </a> 
+                    
+            <a href="https://x.com/Mehadi_Hasan68?t=IukkEQ2E35KVSFHlP-Vj0g&s=09" class="transform transition duration-300 hover:scale-110 hover:text-blue-400">
+                 <i class="fab fa-twitter"></i>
+            </a> 
+            <a href="https://www.linkedin.com/in/md-mehadi-hasan-ariful-60bb30375/" class="transform transition duration-300 hover:scale-110 hover:text-blue-600">
+                 <i class="fab fa-linkedin-in"></i>
+            </a>
+        </nav>
+    </footer>
+
+<!-- FOOTER SECTION ENDS -->
+
+<!-- LOGOUT MODAL START FROM HERE -->
+<dialog id="logout_modal" class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Hello!</h3>
+    <p class="py-4">Are you really want to logout?</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+        <button class="btn" id="logout_btn">ok</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+</body>
+</html>

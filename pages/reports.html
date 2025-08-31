@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../output.css">
+        <!-- foFONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- DAISY UI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script src="../js/index.js" defer></script>
+
+    <!-- AXIOS CDN -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js" integrity="sha512-h9644v03pHqrIHThkvXhB2PJ8zf5E9IyVnrSfZg8Yj8k4RsO4zldcQc4Bi9iVLUCCsqNY0b4WXVV4UB+wbWENA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>reports</title>
+</head>
+
+<body class="bg-gray-100 bg-cover min-h-screen flex items-center justify-center">
+
+  <!--CARD CONTAINER-->
+  <div class="bg-white shadow-lg rounded-2xl p-10 w-full max-w-md">
+    
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-semibold text-gray-800">Submit a Report</h1>
+      <p class="text-gray-500 text-sm mt-1">Please provide clear details of your issue.</p>
+    </div>
+
+    <!-- Form -->
+    <form class="space-y-5">
+
+      <!-- Report Title -->
+      <div>
+        <label for="report_title" class="block text-sm font-medium text-gray-700">Title</label>
+        <input type="text" id="report_title" name="report_title" placeholder="Issue title"
+          class="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" required>
+      </div>
+
+      <!-- Report Description -->
+      <div>
+        <label for="report_text" class="block text-sm font-medium text-gray-700">Description</label>
+        <textarea id="report_text" name="report_text" rows="4" placeholder="Detailed description"
+          class="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" required></textarea>
+      </div>
+
+      <!-- Urgency -->
+      <div>
+        <label for="urgency" class="block text-sm font-medium text-gray-700">Urgency</label>
+        <select id="urgency" name="urgency" required
+          class="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+          <option >low</option>
+          <option  selected>medium</option>
+          <option >high</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+         <button id="submit_report_btn"
+  class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300 shadow">
+  Submit Report
+</button>
+
+    </form>
+
+    <!-- Footer -->
+    <p class="text-center text-gray-400 text-xs mt-6">All reports are confidential and reviewed carefully.</p>
+  </div>
+
+
+   <!-- DAISY RESPONSE MODAL  -->
+ <dialog id="my_modal_1" class="modal">
+   <div class="modal-box">
+    <h3 class="text-lg font-bold">Hello!</h3>
+    <p id="modal-message" class="py-4"></p>
+    <div class="modal-action">
+
+      <form method="dialog">
+        <button class="btn" id="modal-button">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+</body>
+</html>
