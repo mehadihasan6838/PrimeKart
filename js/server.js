@@ -17,7 +17,11 @@ const cors = require("cors");
 
 // -----------------------MIDDLEWARE SETUP----------------
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+    origin: "*",   // ba specific frontend URL diba: ["http://127.0.0.1:5500", "https://your-netlify-app.netlify.app"]
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 
 
 //------------------------MULTER REQUIRE------------------
@@ -906,7 +910,7 @@ app.get(`/api/user_all_purchase_products`,async(req,res) =>{
 //USER DASHBOARD API ENDS HERE-------------------------------------------------------------------------------------
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.DB_PORT || 3000;
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

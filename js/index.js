@@ -703,7 +703,7 @@ if (cardContainer) {
             "card bg-base-100 h-[400px] shadow-sm overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl hover:-translate-y-1";
           card.innerHTML = `
                <figure class="  h-[50%]">
-                <img src="http://localhost:3000/uploads/${product.image_url}" class="h-[80%]" alt="${product.product_name}" />
+                <img src="${BACKEND_URL}/uploads/${product.image_url}" class="h-[80%]" alt="${product.product_name}" />
                </figure>
                
                <div class="card-body">
