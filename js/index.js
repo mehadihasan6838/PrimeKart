@@ -1,5 +1,5 @@
 
-const BACKEND_URL = "primekart-production.up.railway.app";
+const BACKEND_URL = "http://primekart-production.up.railway.app";
 
 //-----------------------------MODAL ACCESS-----------------------
 const modal = document.getElementById("my_modal_1");
