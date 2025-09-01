@@ -21,6 +21,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node js/server.js"
   },
+  "proxy": "https://primekart-production.up.railway.app",
   "keywords": [],
   "author": "",
   "license": "ISC",
