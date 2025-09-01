@@ -1,6 +1,7 @@
 // -------------------DATABASE CONNECTION PROCESS---------
 require('dotenv').config();
 const pool = require("./dataBase.js");
+const BACKEND_URL = "https://your-railway-app.up.railway.app";
 
 const { response } = require("express");
 
@@ -914,5 +915,5 @@ app.get(`/api/user_all_purchase_products`,async(req,res) =>{
 const myPort = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`Server is running on port http://localhost:${myPort}`);
+  console.log(`Server is running on port ${BACKEND_URL}`);
 });
