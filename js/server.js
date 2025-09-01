@@ -1,7 +1,6 @@
 // -------------------DATABASE CONNECTION PROCESS---------
 require('dotenv').config();
 const pool = require("./dataBase.js");
-const BACKEND_URL = "https://your-railway-app.up.railway.app";
 
 const { response } = require("express");
 
@@ -28,11 +27,6 @@ const fs = require("fs");
 // const { use } = require("react");
 
 app.use(express.json());
-
-
-
-//-------------------------MY PORT------------------------
-const port = 3000;
 
 
 // ---------------- STATIC FOLDERS ----------------
@@ -912,8 +906,9 @@ app.get(`/api/user_all_purchase_products`,async(req,res) =>{
 //USER DASHBOARD API ENDS HERE-------------------------------------------------------------------------------------
 
 
-const myPort = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${BACKEND_URL}`);
+  console.log(`Server is running on port ${port}`);
 });
+
