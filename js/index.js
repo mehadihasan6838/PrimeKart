@@ -1,5 +1,5 @@
 
-const BACKEND_URL = "http://localhost:3000";
+const BACKEND_URL = "https://primekart-production.up.railway.app";
 //primekart-production.up.railway.app
 
 //-----------------------------MODAL ACCESS-----------------------
