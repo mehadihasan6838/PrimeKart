@@ -1,53 +1,51 @@
 // -------------------DATABASE CONNECTION PROCESS---------
-require('dotenv').config();
-const pool = require("./dataBase.js");
+import pool from './dataBase.js';
 
-const { response } = require("express");
+import { execute } from "./dataBase.js";
 
 //-------------------REQUIRE EXPRESS JS-------------------
-const express = require("express"); 
-const app = express();  
+import express from "express";
+const app = express();
 
-//-------------------------BYCRIPT INSTALL----------------
-const bcrypt = require("bcrypt"); 
+//-------------------------BCRYPT INSTALL-----------------
+import { hash, compare } from "bcrypt";
 
-
-const bodyParser = require("body-parser"); 
-const cors = require("cors");  
+// -----------------------BODY PARSER + CORS-------------
+import bodyParser from "body-parser";
+import cors from "cors";
 
 // -----------------------MIDDLEWARE SETUP----------------
 app.use(bodyParser.json());
 app.use(cors({
-    origin: "*",   // ba specific frontend URL diba: ["http://127.0.0.1:5500", "https://your-netlify-app.netlify.app"]
+    origin: "*",   
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
 
-
 //------------------------MULTER REQUIRE------------------
-const multer = require("multer");
-const path = require('path');
-const fs = require("fs");
-// const { use } = require("react");
+import multer from "multer";
+import { join, dirname } from "path";
+import { existsSync, unlinkSync, mkdirSync } from "fs";
+import { fileURLToPath } from "url";
+
+// __dirname fix for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 app.use(express.json());
 
-
 // ---------------- STATIC FOLDERS ----------------
-app.use(express.static(path.join(__dirname, "../")));
-app.use("/js", express.static(path.join(__dirname, "../js")));
-app.use("/images", express.static(path.join(__dirname, "../images")));
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-app.use("/profile", express.static(path.join(__dirname, "../profiles")));
+app.use(express.static(join(__dirname, "../")));
+app.use("/js", express.static(join(__dirname, "../js")));
+app.use("/images", express.static(join(__dirname, "../images")));
+app.use("/uploads", express.static(join(__dirname, "../uploads")));
+app.use("/profile", express.static(join(__dirname, "../profiles")));
+app.use("/pages", express.static(join(__dirname, "../pages")));
 
-// Static files serve করা (optional)
-app.use(express.static(path.join(__dirname, "../pages"))); 
-
-// Root route serve করা
-app.use("/pages", express.static(path.join(__dirname, "../pages")));
+app.use("/pages", express.static(join(__dirname, "../pages")));
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../pages/index.html"));
+    res.sendFile(join(__dirname, "../pages/index.html"));
 });
 
 ///REGISTRATION API ------------------
@@ -60,9 +58,9 @@ app.post("/api/register",async(req,res) =>{
      }
       
      try{
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await hash(password, 10);
          const query = 'INSERT INTO users(email,password_hash) VALUES (?,?)';
-         await pool.execute(query,[email,hashedPassword])
+         await execute(query,[email,hashedPassword])
          return res.status(201).json({message:'User registered successfully'});
      } catch (error) {
          console.error("Registration error:", error);
@@ -74,14 +72,12 @@ app.post("/api/register",async(req,res) =>{
          }
      }
 })
-
 //REGISTRATION API ENDS
 
 
 
 // LOGIN API PROCESS START---------------------
 app.post('/api/login',async(req,res) => {
-   
     const {email,password} = req.body;
 
     if(!email || !password){
@@ -91,13 +87,17 @@ app.post('/api/login',async(req,res) => {
     try{
         const query = 'SELECT password_hash,user_id,is_admin FROM users WHERE email = ?';
         const [rows] = await pool.execute(query,[email]);
-         
           if (rows.length === 0) {
-            return res.status(401).json({ message: 'Invalid email or password.' });
+            return res.status(401).json({ message: 'Invalid email or password.'});
         }
         
-        const user = rows[0];
-        const passwordMatch = await bcrypt.compare(password, user.password_hash);
+        const user = rows[0]; 
+        if (!user.password_hash) {
+           return res.status(500).json({message: "Password not set for this user"});
+       }
+
+        const passwordMatch = await compare(password,user.password_hash);
+       
 
        if(passwordMatch){
             const userId = user.user_id;
@@ -126,10 +126,10 @@ app.post('/api/forgot_password', async(req,res) => {
      }
 
      try{
-    const hashPassword = await bcrypt.hash(newPassword, 10);
+    const hashPassword = await hash(newPassword, 10);
     
     const query = 'UPDATE users SET password_hash = ? WHERE user_id = ?'
-    await pool.execute(query,[hashPassword,userId]);
+    await execute(query,[hashPassword,userId]);
 
     return res.status(200).json({message:'Password updated successfully'});
      }catch(err){
@@ -149,23 +149,22 @@ app.post('/api/forgot_password', async(req,res) => {
 
 
 //MULTER MIDDLEWARE FOR FILE HANDLING
-app.use('/uploads', express.static('uploads'));
+// ---------------- MULTER STORAGE ----------------
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/'); 
   },
   filename: (req, file, cb) => {
-   const filePath = path.join('uploads', file.originalname);
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    } else {
-      cb(null, file.originalname);
+    const filePath = join('uploads', file.originalname);
+    if (existsSync(filePath)) {
+      unlinkSync(filePath);
     }
-
-  },
+    cb(null, file.originalname);
+  }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
+
 
 //ADD PRODUCT API  START HERE
 app.post('/api/add_products',upload.single("image"), async(req,res) => {
@@ -566,7 +565,7 @@ app.get('/api/load_messages_for_admin',async(req,res) => {
         const query = `SELECT * FROM messages WHERE sender_id = ? OR receiver_id = ? ORDER BY created_at ASC`;
         const [rows] = await pool.execute(query, [sender_id, sender_id]);
 
-        await pool.execute(`UPDATE messages SET is_read = 1 WHERE sender_id = ? AND receiver_id = 1`, [sender_id]);
+        await execute(`UPDATE messages SET is_read = 1 WHERE sender_id = ? AND receiver_id = 1`, [sender_id]);
 
         return res.json({messages: rows});
 
@@ -588,7 +587,7 @@ app.post('/api/insert_admin_message',async(req,res) => {
   
     try{
     const query = `INSERT INTO messages (sender_id, receiver_id, message_text) VALUES (?,?,?)`
-    await pool.execute(query, [sender_id, receiver_id, message_text.trim()]);
+    await execute(query, [sender_id, receiver_id, message_text.trim()]);
 
     return res.status(201).json({message:'Message sent sucessfully!'});
 
@@ -718,8 +717,8 @@ const updateProfileStorage = multer.diskStorage({
   }
 });
 
-if (!fs.existsSync("profiles")) {
-  fs.mkdirSync("profiles", { recursive: true });
+if (!existsSync("profiles")) {
+  mkdirSync("profiles", { recursive: true });
 }
 
 const updateProfile = multer({ storage: updateProfileStorage });
@@ -746,7 +745,7 @@ app.post('/api/update_profile', updateProfile.single('profile_pic'), async (req,
     if (rows.length > 0) {
       // Update
       const newProfilePic = profilePic ? profilePic : (rows[0].profile_pic || 'default.png');
-      await pool.execute(
+      await execute(
         `UPDATE user_profiles 
          SET full_name=?, phone=?, address=?, dob=?, gender=?, profile_pic=? 
          WHERE user_id=?`,
@@ -754,7 +753,7 @@ app.post('/api/update_profile', updateProfile.single('profile_pic'), async (req,
       );
     } else {
       // Insert
-      await pool.execute(
+      await execute(
         `INSERT INTO user_profiles (user_id, full_name, phone, address, dob, gender, profile_pic)
          VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [user_id, full_name, phone, address, dob, gender, profilePic || 'default.png']
@@ -910,9 +909,8 @@ app.get(`/api/user_all_purchase_products`,async(req,res) =>{
 //USER DASHBOARD API ENDS HERE-------------------------------------------------------------------------------------
 
 
-const port = process.env.DB_PORT || 3000;
-
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port http://localhost:${port}`);
 });
 

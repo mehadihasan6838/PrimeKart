@@ -1,5 +1,6 @@
 
-const BACKEND_URL = "http://primekart-production.up.railway.app";
+const BACKEND_URL = "http://localhost:3000";
+//primekart-production.up.railway.app
 
 //-----------------------------MODAL ACCESS-----------------------
 const modal = document.getElementById("my_modal_1");
@@ -48,7 +49,8 @@ if (loginButton) {
           }, 2000);
         }
       } catch (err) {
-        modalMessage.textContent = err.response.data.message;
+         const message = err?.response?.data?.message || "Something went wrong";
+        modalMessage.textContent = message;
         modal.showModal();
       }
     }
@@ -691,7 +693,7 @@ if (cardContainer) {
         `${BACKEND_URL}/api/get_products`
       );
       const productInfo = response.data;
-       allProducts = response.data;
+       const allProducts = productInfo;
       if (productInfo.length === 0) {
         const emptyMessage = document.createElement("p");
         emptyMessage.textContent = "No products found.";

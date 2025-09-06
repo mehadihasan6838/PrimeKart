@@ -1,5 +1,7 @@
+import mysql from "mysql2/promise";
+import dotenv from "dotenv";
+dotenv.config();
 
-const mysql = require("mysql2/promise");
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -9,5 +11,10 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT || 3306
 });
 
-module.exports = pool;
+export async function execute(query, params = []) {
+  const [rows] = await pool.execute(query, params);
+  return rows;
+}
+
+export default pool;
 
